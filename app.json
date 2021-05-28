@@ -1,0 +1,12 @@
+{
+  "name": "todosNativeTSProject",
+  "displayName": "todosNativeTSProject",
+  "expo": {
+    "name": "todosNativeTSProject",
+    "slug": "todosNativeTSProject",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  }
+}
