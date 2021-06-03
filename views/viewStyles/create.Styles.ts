@@ -22,11 +22,9 @@ export const styles = StyleSheet.create({
     },
     createButtonStyle: {
         padding: "6%",
-        borderRadius: 56,
     },
     cancelButtonStyle: {
         padding: "5.5%",
-        borderRadius: 56,
     },
     buttonTypography: {
         textAlign: "center",

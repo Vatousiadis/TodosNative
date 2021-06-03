@@ -18,14 +18,14 @@ export const Create = ({ navigation }: any) => {
                 <Input placeholder='Description' placeholderTextColor={"#f0f8ff"} style={styles.input} />
             </Item>
             <View style={styles.buttonContainer}>
-                <Button active success style={styles.createButtonStyle}>
+                <Button active rounded success style={styles.createButtonStyle}>
                     <Text style={styles.buttonTypography} >
                         CREATE
                 </Text>
                 </Button>
             </View>
             <View style={styles.buttonContainer}>
-                <Button active light style={styles.cancelButtonStyle} onPress={() => navigation.navigate('Your Todos')} >
+                <Button active rounded light style={styles.cancelButtonStyle} onPress={() => navigation.navigate('Your Todos')} >
                     <Text style={styles.buttonTypography} >
                         CANCEL
                 </Text>

@@ -17,11 +17,9 @@ export const styles = StyleSheet.create({
     },
     cancelButtonStyle: {
         padding: "5.5%",
-        borderRadius: 56,
     },
     deleteButtonStyle: {
         padding: "6%",
-        borderRadius: 56,
     },
     Typography: {
         textAlign: "center",

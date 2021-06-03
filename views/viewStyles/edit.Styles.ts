@@ -16,12 +16,13 @@ export const styles = StyleSheet.create({
         marginBottom: "5%",
     },
     editButtonStyle: {
-        padding: "10%",
-        borderRadius: 56,
+        paddingLeft: "10%",
+        paddingRight: "10%",
+        alignSelf: "center",
+        marginBottom: "5%",
     },
     cancelButtonStyle: {
         padding: "5.5%",
-        borderRadius: 56,
     },
     typography: {
         textAlign: "center",

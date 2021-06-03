@@ -17,14 +17,14 @@ export const Edit = ({ navigation }: any) => {
                 <Input placeholder='Description' placeholderTextColor={"#f0f8ff"} style={styles.input} />
             </Item>
             <View style={styles.buttonContainer}>
-                <Button active primary style={styles.editButtonStyle}>
+                <Button active rounded primary style={styles.editButtonStyle}>
                     <Text style={styles.buttonTypography} >
                         EDIT
                 </Text>
                 </Button>
             </View>
             <View style={styles.buttonContainer}>
-                <Button active light style={styles.cancelButtonStyle} onPress={() => navigation.navigate('Your Todos')} >
+                <Button active rounded light style={styles.cancelButtonStyle} onPress={() => navigation.navigate('Your Todos')} >
                     <Text style={styles.buttonTypography} >
                         CANCEL
                 </Text>

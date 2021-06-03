@@ -13,14 +13,14 @@ export const Delete: React.FC = ({ navigation }: any) => {
             </Text>
             </View>
             <View style={styles.buttonContainer}>
-                <Button active danger style={styles.deleteButtonStyle}>
+                <Button active rounded danger style={styles.deleteButtonStyle}>
                     <Text style={styles.buttonTypography} >
                         DELETE
                 </Text>
                 </Button>
             </View>
             <View style={styles.buttonContainer}>
-                <Button active light style={styles.cancelButtonStyle} onPress={() => navigation.navigate('Your Todos')} >
+                <Button active rounded light style={styles.cancelButtonStyle} onPress={() => navigation.navigate('Your Todos')} >
                     <Text style={styles.buttonTypography} >
                         CANCEL
                 </Text>
