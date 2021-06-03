@@ -3,5 +3,7 @@ A simple Todo List mobile app, similar to this web project https://github.com/Va
 
 To Run App
 npm install expo-cli --global
+
 npm install
+
 expo start
