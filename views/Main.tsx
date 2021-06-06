@@ -62,7 +62,6 @@ export const Main: React.FC = ({ navigation }: any) => {
             });
     }, [render]);
 
-    console.log("render ", render);
     return (
         <View style={styles.container}>
             {isLoading ? (

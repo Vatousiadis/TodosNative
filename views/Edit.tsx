@@ -17,8 +17,8 @@ export const Edit = ({ navigation, route }: any) => {
         title: title,
         description: description,
         docId: docId,
-        thenFunction: () => navigation.navigate("Your Todos")
-    }
+        thenFunction: () => navigation.navigate("Your Todos"),
+    };
 
     const titleHandler = (event: any) => {
         setTitle(event);
@@ -29,8 +29,8 @@ export const Edit = ({ navigation, route }: any) => {
     };
 
     const handleEdit = () => {
-        edit(editProps)
-    }
+        edit(editProps);
+    };
 
     return (
         <View style={styles.container}>
@@ -58,7 +58,13 @@ export const Edit = ({ navigation, route }: any) => {
                 />
             </Item>
             <View style={styles.buttonContainer}>
-                <Button onPress={handleEdit} active rounded primary style={styles.editButtonStyle}>
+                <Button
+                    onPress={handleEdit}
+                    active
+                    rounded
+                    primary
+                    style={styles.editButtonStyle}
+                >
                     <Text style={styles.buttonTypography}>EDIT</Text>
                 </Button>
             </View>

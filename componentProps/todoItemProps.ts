@@ -5,4 +5,3 @@ export interface todoProps {
     completed: boolean;
     timestamp: number;
 }
-

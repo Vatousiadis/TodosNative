@@ -1,3 +1,3 @@
 export interface buttonProps {
-    navCreate: () => null
+    navCreate: () => null;
 }

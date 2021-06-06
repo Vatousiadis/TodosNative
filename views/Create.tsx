@@ -22,8 +22,8 @@ export const Create = ({ navigation }: any) => {
             Alert.alert(
                 "Title Missing",
                 "You must add at least a Title to create a new Todo!",
-                [{text:"OK"}]
-            )
+                [{ text: "OK" }]
+            );
         }
     };
 
