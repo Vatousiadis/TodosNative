@@ -8,3 +8,8 @@ npm install expo-cli --global
 npm install
 
 expo start
+
+
+The settimer warning is related to this unsolved issue with firebase-react native
+https://github.com/facebook/react-native/issues/12981
+So it can be ingored.
