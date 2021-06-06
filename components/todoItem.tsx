@@ -1,73 +1,113 @@
-import React, { useState } from 'react'
-import { View, FlatList, Text, TouchableHighlight } from 'react-native'
-import { CheckBox, Icon } from 'native-base';
-import { todoProps } from "../componentProps/todoItemProps"
+import React from "react";
+import { View, FlatList, Text, TouchableHighlight } from "react-native";
+import { CheckBox, Icon } from "native-base";
+import { todoProps } from "../componentProps/todoItemProps";
 import { styles } from "./componentStyles/todoItem.styles";
-
-//To be switched with backend data
-const todo: todoProps[] = [
-    {
-        title: "test a",
-        description: "A test"
-    },
-    {
-        title: "test b",
-        description: "B test"
-    }
-]
+import { completedProps } from "../firebase/models";
+import { completedUpdate } from "../firebase/models";
 
 type todoItemProps = {
-    navDelete?: () => null;
-    navEdit?: () => null;
-}
+    todos: todoProps[];
+    navigation: any;
+    setRender: () => void;
+};
 
-export const TodoItem: React.FC<todoItemProps> = ({ navDelete, navEdit }) => {
-    const [completed, setCompleted] = useState<boolean>(false) //this will come and get 
-    const [editStyles, setEditStyles] = useState<boolean>(false)
-    const [deleteStyles, setDeleteSyles] = useState<boolean>(false)
+export const TodoItem: React.FC<todoItemProps> = ({
+    navigation,
+    todos,
+    setRender,
+}) => {
+    const checkBoxHandler = (completed: boolean, id: string) => {
+        let completedProps: completedProps = {
+            completed: completed,
+            docId: id,
+            setRender: setRender,
+        };
 
-    const checkBoxHandler = () => { //handler for checkbox
-        setCompleted(!completed)
-    }
+        completedUpdate(completedProps);
+    };
 
-    const editHandler = () => { //handler for checkbox
-        setEditStyles(false)
-        navEdit ? navEdit() : null
-    }
+    const editHandler = (title: string, description: string, id: string) => {
+        navigation.navigate("Edit", {
+            docId: id,
+            title: title,
+            description: description,
+        });
+    };
 
-    const deleteHandler = () => { //handler for checkbox
-        setDeleteSyles(false)
-        navDelete ? navDelete() : null
-    }
+    const deleteHandler = (id: string) => {
+        navigation.navigate("Delete", { docId: id });
+    };
 
     return (
-        <TouchableHighlight>
-            <FlatList
-                data={todo}
-                renderItem={({ item }: { item: todoProps }) =>
-                    <View style={styles.container}>
-                        <View style={completed ? styles.checkedContainer : styles.notCheckedContainer}
-                            onTouchEnd={checkBoxHandler}
-                        >
-                            <CheckBox style={{ backgroundColor: `${completed ? `#00b000` : `#f0f8ff`}` }} color={`${completed ? `#00b000` : `#000000`}`} checked={completed} />
-                        </View>
-                        <View style={styles.itemContainer}>
-                            <Text style={styles.titleTypography}>{item.title}</Text>
-                            <Text style={styles.descriptionTypography}>{item.description}</Text>
-                        </View>
-                        <View
-                            onTouchStart={() => setEditStyles(!editStyles)} style={editStyles ? styles.editTouchedContainer : styles.editContainer}
-                            onTouchEnd={editHandler}>
-                            <Icon type="MaterialIcons" name='edit' ios='edit' android="edit" style={{ fontSize: 20, color: `${editStyles ? `#f0f8ff` : `#000000`}` }} />
-                        </View>
-                        <View
-                            onTouchStart={() => setDeleteSyles(!deleteStyles)} style={deleteStyles ? styles.deleteTouchedContainer : styles.deleteContainer}
-                            onTouchEnd={deleteHandler}>
-                            <Icon type="MaterialIcons" name='delete' ios='delete' android="delete" style={{ fontSize: 20, color: `${deleteStyles ? `#f0f8ff` : `#b31b1b`}` }} />
-                        </View>
+        <FlatList
+            data={todos.sort((a, b) => a.timestamp - b.timestamp)}
+            keyExtractor={(Item) => Item.id}
+            renderItem={({ item }: { item: todoProps }) => (
+                <View style={styles.container}>
+                    <View
+                        style={
+                            item.completed
+                                ? styles.checkedContainer
+                                : styles.notCheckedContainer
+                        }
+                        onTouchEnd={() => checkBoxHandler(item.completed, item.id)}
+                    >
+                        <CheckBox
+                            style={{
+                                backgroundColor: `${item.completed ? `#00b000` : `#f0f8ff`}`,
+                            }}
+                            color={`${item.completed ? `#00b000` : `#000000`}`}
+                            checked={item.completed}
+                        />
                     </View>
-                }
-            />
-        </TouchableHighlight>
-    )
-}
+                    <View style={styles.itemContainer}>
+                        <Text style={styles.titleTypography}>{item.title}</Text>
+                        <Text style={styles.descriptionTypography}>{item.description}</Text>
+                    </View>
+                    <TouchableHighlight
+                        underlayColor="#000000"
+                        activeOpacity={1}
+                        onPress={() => editHandler(item.title, item.description, item.id)}
+                        style={{ flex: 1 }}
+                    >
+                        <View style={styles.editContainer}>
+                            <Icon
+                                type="MaterialIcons"
+                                name="edit"
+                                ios="edit"
+                                android="edit"
+                                style={{
+                                    fontSize: 20,
+                                }}
+                            />
+                        </View>
+                    </TouchableHighlight>
+                    <TouchableHighlight
+                        underlayColor="#b31b1b"
+                        activeOpacity={1}
+                        onPress={() => deleteHandler(item.id)}
+                        style={{
+                            flex: 1,
+                            borderBottomRightRadius: 10,
+                            borderTopRightRadius: 10,
+                        }}
+                    >
+                        <View style={styles.deleteContainer}>
+                            <Icon
+                                type="MaterialIcons"
+                                name="delete"
+                                ios="delete"
+                                android="delete"
+                                style={{
+                                    fontSize: 20,
+                                    color: `#b31b1b`,
+                                }}
+                            />
+                        </View>
+                    </TouchableHighlight>
+                </View>
+            )}
+        />
+    );
+};

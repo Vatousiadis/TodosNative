@@ -2,8 +2,21 @@ import React from 'react'
 import { View, Text } from 'react-native';
 import { Button } from "native-base"
 import { styles } from "./viewStyles/delete.styles";
+import { deleteProps } from "../firebase/models";
+import { deleteItem } from "../firebase/models";
 
-export const Delete: React.FC = ({ navigation }: any) => {
+export const Delete: React.FC = ({ navigation, route }: any) => {
+
+    const docId = route.params.docId;
+
+    let deleteProps: deleteProps = {
+        docId: docId,
+        thenFunction: () => navigation.navigate("Your Todos"),
+    }
+
+    const handleDelete = () => {
+        deleteItem(deleteProps)
+    }
 
     return (
         <View style={styles.container} >
@@ -13,7 +26,7 @@ export const Delete: React.FC = ({ navigation }: any) => {
             </Text>
             </View>
             <View style={styles.buttonContainer}>
-                <Button active rounded danger style={styles.deleteButtonStyle}>
+                <Button active rounded danger style={styles.deleteButtonStyle} onPress={handleDelete}>
                     <Text style={styles.buttonTypography} >
                         DELETE
                 </Text>

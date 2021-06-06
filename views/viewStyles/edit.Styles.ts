@@ -19,7 +19,6 @@ export const styles = StyleSheet.create({
         paddingLeft: "10%",
         paddingRight: "10%",
         alignSelf: "center",
-        marginBottom: "5%",
     },
     cancelButtonStyle: {
         padding: "5.5%",

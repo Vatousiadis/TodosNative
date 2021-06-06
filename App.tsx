@@ -3,14 +3,14 @@ import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { Main } from "./views/Main";
-import {Create} from './views/Create';
+import { Create } from './views/Create';
 import { Edit } from './views/Edit';
 import { Delete } from "./views/Delete";
 
 const Stack = createStackNavigator();
 
-
 export default function App() {
+  console.disableYellowBox = true;
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Main" >
