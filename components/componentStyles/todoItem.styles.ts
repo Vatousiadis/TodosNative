@@ -61,4 +61,27 @@ export const styles = StyleSheet.create({
         fontSize: 15,
         fontStyle: "italic",
     },
+    editIcon: {
+        fontSize: 20,
+    },
+    checkBoxCompleted: {
+        backgroundColor: "#00b000",
+    },
+    checkBoxNotCompleted: {
+        backgroundColor: "#f0f8ff",
+    },
+    editHightlight: {
+        height:"100%",
+        flex: 1,
+    },
+    deleteHightlight: {
+        height:"100%",
+        flex: 1,
+        borderBottomRightRadius: 10,
+        borderTopRightRadius: 10,
+    },
+    deleteIcon: {
+        fontSize: 20,
+        color: `#b31b1b`,
+    },
 });

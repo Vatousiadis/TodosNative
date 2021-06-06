@@ -2,8 +2,8 @@ import React from "react";
 import { View, Text } from "react-native";
 import { Button } from "native-base";
 import { styles } from "./viewStyles/delete.styles";
-import { deleteProps } from "../firebase/models";
-import { deleteItem } from "../firebase/models";
+import { deleteProps } from "../firebase/modelProps";
+import { firebaseAction } from "../firebase/firebase";
 
 export const Delete: React.FC = ({ navigation, route }: any) => {
     const docId = route.params.docId;
@@ -14,7 +14,7 @@ export const Delete: React.FC = ({ navigation, route }: any) => {
     };
 
     const handleDelete = () => {
-        deleteItem(deleteProps);
+        firebaseAction.deleteItem(deleteProps);
     };
 
     return (

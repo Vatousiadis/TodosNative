@@ -1,10 +1,11 @@
 import React from "react";
 import { View, Text } from "react-native";
+import { styles } from "./componentStyles/noTodos.styles";
 
 export const NoTodos = () => {
     return (
-        <View style={{ alignSelf: "center", top: "35%" }}>
-            <Text style={{ color: "#f0f8ff", textAlign: "center", fontSize: 20 }}>
+        <View style={styles.container}>
+            <Text style={styles.typography}>
                 Hit the + button to create a new Todo!
       </Text>
         </View>

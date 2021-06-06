@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import { Item, Input, Button } from "native-base";
 import { View, Text } from "react-native";
 import { styles } from "./viewStyles/edit.Styles";
-import { editProps } from "../firebase/models";
-import { edit } from "../firebase/models";
+import { editProps } from "../firebase/modelProps";
+import { firebaseAction} from "../firebase/firebase";
 
 export const Edit = ({ navigation, route }: any) => {
     const [title, setTitle] = useState<string>(route.params.title);
@@ -29,7 +29,7 @@ export const Edit = ({ navigation, route }: any) => {
     };
 
     const handleEdit = () => {
-        edit(editProps);
+        firebaseAction.edit(editProps);
     };
 
     return (

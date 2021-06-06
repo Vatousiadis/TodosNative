@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import { Item, Input, Button } from "native-base";
 import { View, Text, Alert } from "react-native";
 import { styles } from "./viewStyles/create.Styles";
-import { addProps } from "../firebase/models";
-import { add } from "../firebase/models";
+import { addProps } from "../firebase/modelProps";
+import { firebaseAction } from "../firebase/firebase";
 
 export const Create = ({ navigation }: any) => {
     const [title, setTitle] = useState<string>("");
@@ -17,7 +17,7 @@ export const Create = ({ navigation }: any) => {
 
     const handleCreate = () => {
         if (title) {
-            add(addProps);
+            firebaseAction.add(addProps);
         } else {
             Alert.alert(
                 "Title Missing",

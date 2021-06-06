@@ -3,8 +3,8 @@ import { View, FlatList, Text, TouchableHighlight } from "react-native";
 import { CheckBox, Icon } from "native-base";
 import { todoProps } from "../componentProps/todoItemProps";
 import { styles } from "./componentStyles/todoItem.styles";
-import { completedProps } from "../firebase/models";
-import { completedUpdate } from "../firebase/models";
+import { completedProps } from "../firebase/modelProps";
+import { firebaseAction } from "../firebase/firebase";
 
 type todoItemProps = {
     todos: todoProps[];
@@ -24,7 +24,7 @@ export const TodoItem: React.FC<todoItemProps> = ({
             setRender: setRender,
         };
 
-        completedUpdate(completedProps);
+        firebaseAction.completedUpdate(completedProps);
     };
 
     const editHandler = (title: string, description: string, id: string) => {
@@ -54,9 +54,11 @@ export const TodoItem: React.FC<todoItemProps> = ({
                         onTouchEnd={() => checkBoxHandler(item.completed, item.id)}
                     >
                         <CheckBox
-                            style={{
-                                backgroundColor: `${item.completed ? `#00b000` : `#f0f8ff`}`,
-                            }}
+                            style={
+                                item.completed
+                                        ? styles.checkBoxCompleted
+                                        : styles.checkBoxNotCompleted
+                            }
                             color={`${item.completed ? `#00b000` : `#000000`}`}
                             checked={item.completed}
                         />
@@ -69,7 +71,7 @@ export const TodoItem: React.FC<todoItemProps> = ({
                         underlayColor="#000000"
                         activeOpacity={1}
                         onPress={() => editHandler(item.title, item.description, item.id)}
-                        style={{ flex: 1 }}
+                        style={styles.editHightlight}
                     >
                         <View style={styles.editContainer}>
                             <Icon
@@ -77,9 +79,7 @@ export const TodoItem: React.FC<todoItemProps> = ({
                                 name="edit"
                                 ios="edit"
                                 android="edit"
-                                style={{
-                                    fontSize: 20,
-                                }}
+                                style={styles.editIcon}
                             />
                         </View>
                     </TouchableHighlight>
@@ -87,11 +87,7 @@ export const TodoItem: React.FC<todoItemProps> = ({
                         underlayColor="#b31b1b"
                         activeOpacity={1}
                         onPress={() => deleteHandler(item.id)}
-                        style={{
-                            flex: 1,
-                            borderBottomRightRadius: 10,
-                            borderTopRightRadius: 10,
-                        }}
+                        style={styles.deleteHightlight}
                     >
                         <View style={styles.deleteContainer}>
                             <Icon
@@ -99,10 +95,7 @@ export const TodoItem: React.FC<todoItemProps> = ({
                                 name="delete"
                                 ios="delete"
                                 android="delete"
-                                style={{
-                                    fontSize: 20,
-                                    color: `#b31b1b`,
-                                }}
+                                style={styles.deleteIcon}
                             />
                         </View>
                     </TouchableHighlight>

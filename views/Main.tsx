@@ -1,10 +1,10 @@
 import React, { useState, useCallback, useEffect } from "react";
-import { View, Text } from "react-native";
+import { View } from "react-native";
 import { CreateButton } from "../components/createButton";
 import { TodoItem } from "../components/todoItem";
 import { styles } from "./viewStyles/main.Styles";
 import { useFocusEffect } from "@react-navigation/native";
-import { db } from "../firebase/firebase";
+import { firebaseAction } from "../firebase/firebase";
 import { todoProps } from "../componentProps/todoItemProps";
 import { Spinner } from "native-base";
 import { NoTodos } from "../components/noTodos";
@@ -15,8 +15,7 @@ export const Main: React.FC = ({ navigation }: any) => {
     const [isLoading, setIsLoading] = useState<boolean>(true);
     const [hasTodos, setHasTodos] = useState<boolean>(false);
     const [render, setRender] = useState<boolean>(false);
-    const [todos, setTodos]: [todoProps[], (todos: todoProps[]) => void] =
-        useState(defaultTodo);
+    const [todos, setTodos]: [any, (todos: any) => void] = useState(defaultTodo);
 
     const handleRender = (render: boolean) => {
         setRender(!render);
@@ -25,33 +24,8 @@ export const Main: React.FC = ({ navigation }: any) => {
     useFocusEffect(
         //used to render New array of todos when returning to this screen
         useCallback(() => {
-            let todosArr: any = [];
-            db.collection("Todos")
-                .get()
-                .then((querySnapshot) => {
-                    querySnapshot.forEach((doc) => {
-                        todosArr.push({ ...doc.data(), id: doc.id });
-                    });
-                    setTodos(todosArr);
-                    setIsLoading(false);
-                    if (todosArr.length > 0) {
-                        setHasTodos(true);
-                    } else {
-                        setHasTodos(false);
-                    }
-                });
-        }, [])
-    );
-
-    useEffect(() => {
-        //used to render New array of todos when user is in the Main screen
-        let todosArr: any = [];
-        db.collection("Todos")
-            .get()
-            .then((querySnapshot) => {
-                querySnapshot.forEach((doc) => {
-                    todosArr.push({ ...doc.data(), id: doc.id });
-                });
+            const getData = async () => {
+                const todosArr = await firebaseAction.fetch();
                 setTodos(todosArr);
                 setIsLoading(false);
                 if (todosArr.length > 0) {
@@ -59,13 +33,30 @@ export const Main: React.FC = ({ navigation }: any) => {
                 } else {
                     setHasTodos(false);
                 }
-            });
+            };
+            getData();
+        }, [])
+    );
+
+    useEffect(() => {
+        //used to force render New array of todos when user is in the Main screen
+        const getData = async () => {
+            const todosArr = await firebaseAction.fetch();
+            setTodos(todosArr);
+            setIsLoading(false);
+            if (todosArr.length > 0) {
+                setHasTodos(true);
+            } else {
+                setHasTodos(false);
+            }
+        };
+        getData();
     }, [render]);
 
     return (
         <View style={styles.container}>
             {isLoading ? (
-                <Spinner color="#f0f8ff" style={{ alignSelf: "center", top: "35%" }} />
+                <Spinner color="#f0f8ff" style={styles.spinner} />
             ) : (
                 <>
                     {hasTodos ? (
