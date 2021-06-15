@@ -1,13 +1,16 @@
 import React, { useState } from "react";
-import { Item, Input, Button } from "native-base";
+import { Item, Input } from "native-base";
 import { View, Text, Alert } from "react-native";
 import { styles } from "./viewStyles/create.Styles";
 import { addProps } from "../firebase/modelProps";
 import { firebaseAction } from "../firebase/firebase";
+import { TextButton } from "../components/textButton";
+import { useNavigation } from "@react-navigation/native";
 
-export const Create = ({ navigation }: any) => {
+export const Create = () => {
     const [title, setTitle] = useState<string>("");
     const [description, setDescription] = useState<string>("");
+    const navigation = useNavigation()
 
     let addProps: addProps = {
         thenFunction: () => navigation.navigate("Your Todos"),
@@ -57,26 +60,24 @@ export const Create = ({ navigation }: any) => {
                 />
             </Item>
             <View style={styles.buttonContainer}>
-                <Button
+                <TextButton
+                    text="CREATE"
                     active
                     rounded
                     success
-                    style={styles.createButtonStyle}
+                    style={styles.cancelButtonStyle}
                     onPress={handleCreate}
-                >
-                    <Text style={styles.buttonTypography}>CREATE</Text>
-                </Button>
+                />
             </View>
             <View style={styles.buttonContainer}>
-                <Button
+                <TextButton
+                    text="CANCEL"
                     active
                     rounded
                     light
                     style={styles.cancelButtonStyle}
                     onPress={() => navigation.navigate("Your Todos")}
-                >
-                    <Text style={styles.buttonTypography}>CANCEL</Text>
-                </Button>
+                />
             </View>
         </View>
     );

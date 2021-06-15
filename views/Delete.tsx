@@ -4,9 +4,12 @@ import { Button } from "native-base";
 import { styles } from "./viewStyles/delete.styles";
 import { deleteProps } from "../firebase/modelProps";
 import { firebaseAction } from "../firebase/firebase";
+import { TextButton } from "../components/textButton";
+import { useNavigation } from "@react-navigation/native";
 
-export const Delete: React.FC = ({ navigation, route }: any) => {
+export const Delete: React.FC = ({ route }: any) => {
     const docId = route.params.docId;
+    const navigation = useNavigation()
 
     let deleteProps: deleteProps = {
         docId: docId,
@@ -22,29 +25,27 @@ export const Delete: React.FC = ({ navigation, route }: any) => {
             <View>
                 <Text style={styles.Typography}>
                     Are you sure you wish to delete this Todo?
-        </Text>
+                </Text>
             </View>
             <View style={styles.buttonContainer}>
-                <Button
+                <TextButton
+                    text="DELETE"
                     active
                     rounded
                     danger
                     style={styles.deleteButtonStyle}
                     onPress={handleDelete}
-                >
-                    <Text style={styles.buttonTypography}>DELETE</Text>
-                </Button>
+                />
             </View>
             <View style={styles.buttonContainer}>
-                <Button
+                <TextButton
+                    text="CANCEL"
                     active
                     rounded
                     light
                     style={styles.cancelButtonStyle}
                     onPress={() => navigation.navigate("Your Todos")}
-                >
-                    <Text style={styles.buttonTypography}>CANCEL</Text>
-                </Button>
+                />
             </View>
         </View>
     );

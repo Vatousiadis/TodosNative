@@ -1,17 +1,20 @@
 import React, { useState } from "react";
-import { Item, Input, Button } from "native-base";
-import { View, Text } from "react-native";
+import { Item, Input } from "native-base";
+import { View, Text, Alert } from "react-native";
 import { styles } from "./viewStyles/edit.Styles";
 import { editProps } from "../firebase/modelProps";
-import { firebaseAction} from "../firebase/firebase";
+import { firebaseAction } from "../firebase/firebase";
+import { TextButton } from "../components/textButton";
+import { useNavigation } from '@react-navigation/native';
 
-export const Edit = ({ navigation, route }: any) => {
+export const Edit = ({  route }: any) => {
     const [title, setTitle] = useState<string>(route.params.title);
     const [description, setDescription] = useState<string>(
         route.params.description
     );
 
     const docId = route.params.docId;
+    const navigation = useNavigation()
 
     let editProps: editProps = {
         title: title,
@@ -29,7 +32,15 @@ export const Edit = ({ navigation, route }: any) => {
     };
 
     const handleEdit = () => {
-        firebaseAction.edit(editProps);
+        if (title) {
+            firebaseAction.edit(editProps);
+        } else {
+            Alert.alert(
+                "Title Missing",
+                "Your Todo must have at least a title to complete editing it!",
+                [{ text: "OK" }]
+            );
+        }
     };
 
     return (
@@ -37,7 +48,7 @@ export const Edit = ({ navigation, route }: any) => {
             <View style={styles.textContainer}>
                 <Text style={styles.typography}>
                     Here you can change your Todo's title and description.
-        </Text>
+                </Text>
             </View>
             <Item rounded style={styles.item}>
                 <Input
@@ -58,26 +69,24 @@ export const Edit = ({ navigation, route }: any) => {
                 />
             </Item>
             <View style={styles.buttonContainer}>
-                <Button
-                    onPress={handleEdit}
+                <TextButton
+                    text="EDIT"
                     active
                     rounded
                     primary
                     style={styles.editButtonStyle}
-                >
-                    <Text style={styles.buttonTypography}>EDIT</Text>
-                </Button>
+                    onPress={handleEdit}
+                />
             </View>
             <View style={styles.buttonContainer}>
-                <Button
+                <TextButton
+                    text="CANCEL"
                     active
                     rounded
                     light
                     style={styles.cancelButtonStyle}
                     onPress={() => navigation.navigate("Your Todos")}
-                >
-                    <Text style={styles.buttonTypography}>CANCEL</Text>
-                </Button>
+                />
             </View>
         </View>
     );

@@ -1,12 +1,12 @@
 export interface addProps {
-    thenFunction: () => null;
+    thenFunction: () => void;
     title: string;
     description: string;
 }
 
 export interface deleteProps {
     docId: string;
-    thenFunction: () => null;
+    thenFunction: () => void;
 }
 
 export interface completedProps {
@@ -19,5 +19,5 @@ export interface editProps {
     title: string;
     description: string;
     docId: string;
-    thenFunction: () => null;
+    thenFunction: () => void;
 }

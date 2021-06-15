@@ -1,5 +1,5 @@
 import React, { useState, useCallback, useEffect } from "react";
-import { View } from "react-native";
+import { ScrollView, View } from "react-native";
 import { CreateButton } from "../components/createButton";
 import { TodoItem } from "../components/todoItem";
 import { styles } from "./viewStyles/main.Styles";
@@ -55,22 +55,26 @@ export const Main: React.FC = ({ navigation }: any) => {
 
     return (
         <View style={styles.container}>
-            {isLoading ? (
-                <Spinner color="#f0f8ff" style={styles.spinner} />
-            ) : (
-                <>
-                    {hasTodos ? (
-                        <TodoItem
-                            todos={todos}
-                            navigation={navigation}
-                            setRender={() => handleRender(render)}
-                        />
-                    ) : (
-                        <NoTodos />
-                    )}
-                </>
-            )}
-            <CreateButton navCreate={() => navigation.navigate("Create")} />
+            <View style={styles.list}>
+                {isLoading ? (
+                    <Spinner color="#f0f8ff" style={styles.spinner} />
+                ) : (
+                    <>
+                        {hasTodos ? (
+                            <TodoItem
+                                todos={todos}
+                                navigation={navigation}
+                                setRender={() => handleRender(render)}
+                            />
+                        ) : (
+                            <NoTodos />
+                        )}
+                    </>
+                )}
+            </View>
+            <View style={styles.footer}>
+                <CreateButton navCreate={() => navigation.navigate("Create")} />
+            </View>
         </View>
     );
 };
